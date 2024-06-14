@@ -16,47 +16,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  codeql_analyze:
-    name: "CodeQL"
-    if: ${{ github.event_name == 'push' }}
-    uses: dBildungsplattform/dbp-github-workflows/.github/workflows/check-codeql.yaml@5
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-  build_image_on_push:
-    name: "Publish image and scan with trivy"
-    if: ${{ github.event_name == 'push' }}
-    needs:
-      - codeql_analyze
-
-    permissions:
-      packages: write
-      security-events: write
-      contents: read
-    uses: dBildungsplattform/dbp-github-workflows/.github/workflows/image-publish-trivy.yaml@7
-    with:
-      image_name: "dbildungs-iam-ldap"
-      run_trivy_scan: true
-      image_tag_generation: ${{ ( github.ref_name == 'main' || startsWith(github.ref_name,'dependabot/') )  && 'commit_hash' || 'ticket_from_branch' }}
-      add_latest_tag: ${{ github.ref_name == 'main' }}
-      container_registry: "ghcr.io"
-      fail_on_vulnerabilites: false
-      report_location: "Dockerfile"
-  
-  scheduled_trivy_scan:
-    name: "Scheduled trivy scan of latest image"
-    if: ${{ github.event_name == 'schedule' }}
-    permissions:
-      packages: read
-      security-events: write
-    uses: dBildungsplattform/dbp-github-workflows/.github/workflows/check-trivy.yaml@5
-    with:
-      image_ref: 'ghcr.io/${{ github.repository_owner }}/dbildungs-iam-ldap:latest'
-      fail_on_vulnerabilites: false
-      report_location: "Dockerfile"
-
   scan_helm:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}
     uses: dBildungsplattform/dbp-github-workflows/.github/workflows/check-helm-kics.yaml@5
