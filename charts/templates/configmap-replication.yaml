@@ -6,11 +6,11 @@
 # Starts to runs within the adding LDAP extra schemas Section
 # and i think it is only loaded the first time - so this is nothing for configs
 
-#
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "openldap.fullname" . }}-replication
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ template "openldap.name" . }}
     chart: {{ template "openldap.chart" . }}

@@ -33,6 +33,7 @@ spec:
       - name: {{ template "openldap.fullname" . }}-metrics
         image: "{{ .Values.metrics.image.repository }}:{{ .Values.metrics.image.tag }}"
         imagePullPolicy: {{ .Values.metrics.image.pullPolicy | default "Always"}}
+        automountServiceAccountToken: false
         securityContext: 
           enabled: true
           runAsUser: 1000

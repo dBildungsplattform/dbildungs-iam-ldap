@@ -72,6 +72,9 @@ spec:
               sed -i -e "s/%%ADMIN_PASSWORD%%/${LDAP_ADMIN_PASSWORD}/g" /custom_config/*
             {{- end }}
           {{- if .Values.initTLSSecret.resources }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           resources: {{- toYaml .Values.initTLSSecret.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
@@ -118,6 +121,9 @@ spec:
               [ -e /certs/ca.crt ] || cp -a /certs/tls.crt /certs/ca.crt
               echo "Files related to TLS moved where they belong"
           {{- if .Values.initTLSSecret.resources }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           resources: {{- toYaml .Values.initTLSSecret.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
@@ -157,6 +163,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ include "openldap.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_NAME
               valueFrom:

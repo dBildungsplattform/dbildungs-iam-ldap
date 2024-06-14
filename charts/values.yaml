@@ -139,6 +139,21 @@ resources:
     cpu: 200m
     memory: 200Mi
 
+
+# enabling other features makes it so that ldap container fails with not enough permissions
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop: ["ALL"]
+  # seccompProfile:
+  #   type: "RuntimeDefault"
+
+
 podSecurityContext:
   enabled: true
   runAsUser: 1001
@@ -245,11 +260,14 @@ initTLSSecret:
     repository: alpine/openssl
     tag: latest
     pullPolicy: IfNotPresent
-  # secret: "dbildungs-iam-ldap-tls" 
+  secret: "dbildungs-iam-ldap-tls" 
   resources:
-    limits: {}
-    requests: {}
-
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 500Mi
 ## initContainers:
 ##  - name: your-image-name
 ##    image: your-image

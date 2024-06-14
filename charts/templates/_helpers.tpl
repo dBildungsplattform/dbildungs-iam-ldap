@@ -50,9 +50,6 @@ Generate chart secret name
 
 
 
-
-
-
 {{/*
 Renders a value that contains template.
 Usage:

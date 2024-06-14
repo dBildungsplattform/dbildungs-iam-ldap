@@ -108,3 +108,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# enabling other features does not let ldapadmin get access
+containerSecurityContext: 
+  enabled: true
+  # privileged: false
+  # readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+  # seccompProfile:
+  #   type: "RuntimeDefault"
