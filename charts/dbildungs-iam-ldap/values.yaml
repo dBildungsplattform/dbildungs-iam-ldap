@@ -6,7 +6,7 @@ global:
   ldapDomain: "schule-sh.de"                  # translates to LDAP_ROOT
   ## Default Passwords to use, stored as a secret. Not used if existingSecret is set.
   # Specifies an existing secret to be used for admin and config user passwords. The expected key are LDAP_ADMIN_PASSWORD and LDAP_CONFIG_ADMIN_PASSWORD.
-  existingSecret: "dbildungs-iam-ldap"
+  existingSecret: ""
   # If you do not set the credentials via this secret but via the ENV the Helm Chart will fail (permission issue)
   adminUser: "admin"                          # LDAP_ADMIN_USERNAME
   # adminPassword: ""                         # LDAP_CONFIG_ADMIN_PASSWORD
@@ -198,7 +198,7 @@ extraVolumes: []
 extraVolumeMounts: []
 
 serviceAccount:
-  create: true
+  create: false
   name: ""
   automountServiceAccountToken: false
   annotations: {}  
@@ -260,7 +260,7 @@ initTLSSecret:
     repository: alpine/openssl
     tag: latest
     pullPolicy: IfNotPresent
-  secret: "dbildungs-iam-ldap-tls" 
+  secret: "" 
   resources:
     limits:
       cpu: 500m
