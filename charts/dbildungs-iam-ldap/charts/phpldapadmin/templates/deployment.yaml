@@ -28,11 +28,11 @@ spec:
         {{- tpl (toYaml .) $ | nindent 6 }}
       {{- end }}
       {{- end }}
+      automountServiceAccountToken: false
       containers:
       - name: {{ .Chart.Name }}
         image: {{ include "phpldapadmin.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        automountServiceAccountToken: false
         {{- if .Values.containerSecurityContext.enabled }}
         securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
         {{- end }}
