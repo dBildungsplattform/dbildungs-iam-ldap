@@ -113,13 +113,15 @@ spec:
             - -c
             - |
               {{- if and .Values.initTLSSecret.tls_enabled .Values.initTLSSecret.secret }}
+              echo "Tls files are loaded from a secret"
               {{- else }}
+              echo "Generating tls.key, tls.crt and ca.crt"
               openssl req -x509 -newkey rsa:4096 -nodes -subj '/CN={{ .Values.global.ldapDomain }}' -keyout /tmp-certs/tls.key -out /tmp-certs/tls.crt -days 365
               chmod 777  /tmp-certs/*
               {{- end }}
+              echo "Moving files related to TLS where they belong"
               cp -Lr /tmp-certs/* /certs
               [ -e /certs/ca.crt ] || cp -a /certs/tls.crt /certs/ca.crt
-              echo "Files related to TLS moved where they belong"
           {{- if .Values.initTLSSecret.resources }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
@@ -283,7 +285,7 @@ spec:
           emptyDir: {}
         - name: ldap-configuration
           secret:
-            secretName: ldap-configuration
+            secretName: {{ .Values.configurationSercretName }}
         - name: cm-replication
           configMap:
             name: {{ template "openldap.fullname" . }}-replication

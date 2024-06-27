@@ -27,6 +27,7 @@ data:
   {{- end }}
   LDAP_TLS_CERT_FILE: /opt/bitnami/openldap/certs/tls.crt
   LDAP_TLS_KEY_FILE: /opt/bitnami/openldap/certs/tls.key
+  # the var has to be set even though we do not provide a value # content of tls.crt seems to get inserted if nothing is provided
   LDAP_TLS_CA_FILE: /opt/bitnami/openldap/certs/ca.crt
   {{- if .Values.global.configUserEnabled }}
   LDAP_CONFIG_ADMIN_ENABLED: "yes"

@@ -64,12 +64,13 @@ jobs:
     with:
       branch: ${{ needs.branch_meta.outputs.branch }}
 
+  # test if this really works
   wait_for_helm_chart_to_get_published:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
         run: |
-          sleep 1m 
+          sleep 2m 
 
   deploy:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}

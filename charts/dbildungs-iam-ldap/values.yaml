@@ -43,8 +43,9 @@ service:
   enableSslLdapPort: true
 
   sessionAffinity: None
-  # type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP # normal
+  # type: LoadBalancer
+  # bei false wird trotzem irgendiwe eine erstellt nachgucken warum
   externalIp: false
   # if enabled you need to have to set the LOADBALANCER_IP key with value in the existingSecret
   # externalIp: true
@@ -69,8 +70,8 @@ env:
   # LDAP_EXTRA_SCHEMAS: cosine,inetorgperson,nis
 
   # Security
-  LDAP_ENABLE_TLS: "no" # for testing with Ldap admin
-  # LDAP_ENABLE_TLS: "yes" 
+  # LDAP_ENABLE_TLS: "no" # for testing with Ldap admin
+  LDAP_ENABLE_TLS: "yes" 
   # LDAP_REQUIRE_TLS: "yes" # not sure whether this is necessary, it breaks stuff
   LDAPTLS_REQCERT: "never"
   LDAP_TLS_ENFORCE: "false"
@@ -99,7 +100,7 @@ pdb:
 # Custom openldap configuration files used to override default settings
 # can not get loaded if TLS is required ldap_bind: Confidentiality required (13) additional info: TLS confidentiality required
 # DO NOT FORGET to put the Root Organisation object as it won't be created while using customLdifFiles
-# Files that chage the general config or create ACL are not allowed here, insufficient permissions, they get hendled via the ldap-configuration secret
+# Files that chage the general config or create ACL are not allowed here, insufficient permissions, they get hendled via the dbildungs-iam-ldap-configuration secret
 customLdifFiles:
   00-root.ldif: |-
     dn: dc=schule-sh,dc=de
@@ -152,7 +153,6 @@ containerSecurityContext:
   #   drop: ["ALL"]
   # seccompProfile:
   #   type: "RuntimeDefault"
-
 
 podSecurityContext:
   enabled: true
@@ -322,3 +322,6 @@ phpldapadmin:
     # - secretName: phpldapadmin.example
     #   hosts:
     #   - phpldapadmin.example
+
+configurationSecretName: dbildungs-iam-ldap-configuration
+# configurationSecretName: ""
