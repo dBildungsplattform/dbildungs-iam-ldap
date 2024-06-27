@@ -285,7 +285,7 @@ spec:
           emptyDir: {}
         - name: ldap-configuration
           secret:
-            secretName: {{ .Values.configurationSercretName }}
+            secretName: {{ .Values.configurationSecretName }}
         - name: cm-replication
           configMap:
             name: {{ template "openldap.fullname" . }}-replication
