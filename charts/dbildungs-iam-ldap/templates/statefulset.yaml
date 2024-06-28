@@ -82,8 +82,10 @@ spec:
               mountPath: /tmp-init-scripts
             - name: writable-init-scripts
               mountPath: /script
-            - name: ldap-configuration
-              mountPath: /ldap-configuration
+            - name: ldap-configuration-apply
+              mountPath: /ldap-configuration/apply/
+            - name: ldap-configuration-modify
+              mountPath: /ldap-configuration/modify/
     {{- if .Values.customSchemaFiles }}
       {{- range $file := (include "openldap.customSchemaFiles" . | split ",") }}
             - name: cm-custom-schema-files
@@ -92,6 +94,12 @@ spec:
       {{- end }}
             - name: custom-schema-files
               mountPath: /custom-schemas/
+    {{- end }}
+    {{- if or (.Values.customLdifFiles) (.Values.customLdifCm) }}
+            - name: cm-custom-ldif-files
+              mountPath: /cm-ldifs/
+            - name: custom-ldif-files
+              mountPath: /custom-ldifs/
     {{- end }}
             - name: cm-replication
               mountPath: "/cm-schemas-acls"
@@ -151,9 +159,6 @@ spec:
       {{- end }}
       {{- if .Values.schedulerName }}
       schedulerName: {{- .Values.schedulerName | quote }}
-      {{- end }}
-      {{- if .Values.podSecurityContext.enabled }}
-      securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
@@ -239,8 +244,10 @@ spec:
               mountPath: /script
             - name: data
               mountPath: /bitnami/openldap/
-            - name: ldap-configuration
-              mountPath: /ldap-configuration
+            - name: ldap-configuration-apply
+              mountPath: /ldap-configuration/apply
+            - name: ldap-configuration-modify
+              mountPath: /ldap-configuration/modify
             - name: certs
               mountPath: /opt/bitnami/openldap/certs
             {{- range $file := (include "openldap.builtinSchemaFiles" . | split ",") }}
@@ -255,7 +262,10 @@ spec:
               subPath: {{ $file }}.ldif
             {{- end }}
 {{- end }}
-
+{{- if or (.Values.customLdifFiles) (.Values.customLdifCm) }}
+            - name: custom-ldif-files
+              mountPath: /ldifs/
+{{- end }}
 {{- range .Values.customFileSets }}
 {{- $fs := . }}
 {{- range .files }}
@@ -283,9 +293,14 @@ spec:
             name: entrypoint-script
         - name: writable-init-scripts
           emptyDir: {}
-        - name: ldap-configuration
+        - name: ldap-configuration-apply
           secret:
-            secretName: {{ .Values.configurationSecretName }}
+            # could make the secret name variable
+            secretName: dbildungs-iam-ldap-config-apply
+        - name: ldap-configuration-modify
+          secret:
+            # could make the secret name variable
+            secretName: dbildungs-iam-ldap-config-modify
         - name: cm-replication
           configMap:
             name: {{ template "openldap.fullname" . }}-replication

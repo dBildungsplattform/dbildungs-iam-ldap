@@ -23,15 +23,16 @@ data:
     set -e
     # found no way to check if ldap server is running with a while statement
     sleep 5
-    # it is important that the above runs first, otherwise it fails - so that the ACLS are adjusted 
-    ldapmodify -Y EXTERNAL -H ldapi:/// -f /ldap-configuration/modify.ldif
-    # no sure why this sleep is needed again 
+    # it is important that the above runs first, otherwise it fails since the ACLS have to get adjusted first 
+    ldapmodify -Y EXTERNAL -H ldapi:/// -f /ldap-configuration/modify/modify.ldif
+    # no sure why this sleep is needed again - but it is
     sleep 10
     /bin/bash /script/02.sh
 
   # this script is needed so that Helm Chart is stable if persistence is enabled
+  # it applies changes if they are new, but modifies them if they already exist
   02.sh: |  
-    LDIF_FILE="/ldap-configuration/apply.ldif"
+    LDIF_FILE="/ldap-configuration/apply/apply.ldif"
 
     # Function to process each entry
     process_entry() {
