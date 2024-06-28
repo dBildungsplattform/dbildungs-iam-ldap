@@ -42,7 +42,7 @@ service:
   enableSslLdapPort: true
 
   sessionAffinity: None
-  type: ClusterIP # normal
+  type: ClusterIP 
   # type: LoadBalancer
   # bei false wird trotzem irgendiwe eine erstellt nachgucken warum
   externalIp: false

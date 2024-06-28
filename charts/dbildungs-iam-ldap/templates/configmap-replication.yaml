@@ -2,9 +2,8 @@
 # A ConfigMap spec for openldap slapd that map directly to files under
 # /container/service/slapd/assets/config/bootstrap/ldif/custom
 
-# why are the files in /opt/bitnami/openldap/etc/schema also loaded?
-# Starts to runs within the adding LDAP extra schemas Section
-# and i think it is only loaded the first time - so this is nothing for configs
+# files are placed in /opt/bitnami/openldap/etc/schema
+# Starts to run within the adding LDAP extra schemas Section
 
 apiVersion: v1
 kind: ConfigMap

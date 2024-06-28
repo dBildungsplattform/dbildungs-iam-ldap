@@ -71,10 +71,10 @@ spec:
               sed -i -e "s/%%CONFIG_PASSWORD%%/${LDAP_CONFIG_ADMIN_PASSWORD}/g" /custom_config/*
               sed -i -e "s/%%ADMIN_PASSWORD%%/${LDAP_ADMIN_PASSWORD}/g" /custom_config/*
             {{- end }}
-          {{- if .Values.initTLSSecret.resources }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
+          {{- if .Values.initTLSSecret.resources }}
           resources: {{- toYaml .Values.initTLSSecret.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
@@ -130,10 +130,10 @@ spec:
               echo "Moving files related to TLS where they belong"
               cp -Lr /tmp-certs/* /certs
               [ -e /certs/ca.crt ] || cp -a /certs/tls.crt /certs/ca.crt
-          {{- if .Values.initTLSSecret.resources }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
+          {{- if .Values.initTLSSecret.resources }}
           resources: {{- toYaml .Values.initTLSSecret.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
@@ -193,9 +193,9 @@ spec:
             - secretRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
             {{- end }}
-            # this should be cleaner
             - secretRef:
-                name: {{ .Values.existingSecret.name }}
+                name: {{ template "openldap.secretName" . }}
+                # name: {{ .Values.existingSecret.name }}
           {{- if .Values.resources }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}
@@ -315,10 +315,10 @@ spec:
         - name: custom-ldif-files
           emptyDir:
             medium: Memory
-{{- else if .Values.customLdifSecret }}
+{{- else if .Values.customLdifCm }}
         - name: cm-custom-ldif-files
-          secret:
-            secretName: {{ .Values.customLdifSecret }}
+          configMap:
+            name: {{ .Values.customLdifCm }}
         - name: custom-ldif-files
           emptyDir:
             medium: Memory

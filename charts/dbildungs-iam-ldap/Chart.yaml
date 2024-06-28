@@ -1,7 +1,7 @@
 apiVersion: v2
 name: dbildungs-iam-ldap
 version: 0.0.1
-description: A Helm Chart for the dbildungs-iam-ldap using community developed LDAP software
+description: Helm Chart for using community developed OpenLDAP software
 appVersion: ""
 dependencies:
 - condition: phpldapadmin.enabled
