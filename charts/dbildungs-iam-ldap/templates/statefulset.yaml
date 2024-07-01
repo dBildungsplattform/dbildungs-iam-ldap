@@ -141,6 +141,22 @@ spec:
               mountPath: "/certs"
             - name: secret-certs
               mountPath: "/tmp-certs"
+      {{- if .Values.volumePermissions.enabled }}
+        - name: volume-permissions
+          image: {{ include "openldap.volumePermissionsImage" . }}
+          imagePullPolicy: {{ .Values.volumePermissions.image.pullPolicy | quote }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.volumePermissions.image.command "context" $) | nindent 12 }}
+          securityContext: 
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          {{- if .Values.volumePermissions.resources }}
+          resources: {{- toYaml .Values.volumePermissions.resources | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /bitnami
+              name: data
+      {{- end }}
       serviceAccountName: {{ template "openldap.serviceAccountName" . }}
       {{- include "openldap.imagePullSecrets" . | nindent 6 }}
       {{- if .Values.hostAliases }}
