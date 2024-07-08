@@ -1,4 +1,4 @@
-# Scan & Publish image and helm chart on push, deployment on push, delete deployment on branch deletion, scheduled trivy scanner
+# Scan & Publish helm chart on push, deployment on push, delete deployment on branch deletion, scheduled trivy scanner
 name: "Dev Pipeline"
 
 # All triggers have to be in one file, so that the trivy results can be compared to identify introduced vulnerabilities
@@ -79,8 +79,7 @@ jobs:
       - branch_meta
       - create_branch_identifier
       - wait_for_helm_chart_to_get_published
-    # uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@5 
-    uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@DBP-799-openldap-image-helm-chart 
+    uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@5 
     with:
       dbildungs_iam_server_branch: ${{ needs.branch_meta.outputs.ticket }}
       schulportal_client_branch: ${{ needs.branch_meta.outputs.ticket }}
