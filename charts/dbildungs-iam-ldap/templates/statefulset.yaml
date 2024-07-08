@@ -211,7 +211,6 @@ spec:
             {{- end }}
             - secretRef:
                 name: {{ template "openldap.secretName" . }}
-                # name: {{ .Values.existingSecret.name }}
           {{- if .Values.resources }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}

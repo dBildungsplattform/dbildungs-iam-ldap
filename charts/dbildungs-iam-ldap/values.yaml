@@ -44,7 +44,6 @@ service:
   sessionAffinity: None
   type: ClusterIP 
   # type: LoadBalancer
-  # bei false wird trotzem irgendiwe eine erstellt nachgucken warum
   externalIp: false
   # if enabled you need to have to set the LOADBALANCER_IP key with value in the existingSecret
   # externalIp: true
@@ -53,6 +52,14 @@ service:
   # servicecenter für den prometheus blackbox exporter freischalten
   # SourceRangesRestriction: true
   # enableLdapPort: false
+
+# enable this service block and disable the service one above, to make LDAP outside the cluster available 
+# Note that only one namespace at a time can use this feature!!
+# service:
+#   enableSslLdapPort: true
+#   type: LoadBalancer
+#   externalIp: true
+#   SourceRangesRestriction: false
 
 
 # Use the env variables from https://hub.docker.com/r/bitnami/openldap/
@@ -251,7 +258,10 @@ initSchema:
 ## 'initTlsSecret' init container parameters
 ##  need a secret with tls.crt, tls.key 
 initTLSSecret:
-  tls_enabled: true # disable it for testing with phpldapadmin
+  # adminldap, per default disabled only works with tls_enabled
+  tls_enabled: false 
+  # tls_enabled: true # needs to get enabled if you want to make the service available to the outside 
+  # Note that only one namespace at a time can use this feature and that you need to copy a tls secret into the namespace, see Confluence for more information
   image:
     registry: docker.io
     repository: alpine/openssl

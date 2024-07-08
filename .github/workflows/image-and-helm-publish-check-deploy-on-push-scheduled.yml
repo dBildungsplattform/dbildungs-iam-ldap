@@ -64,7 +64,6 @@ jobs:
     with:
       branch: ${{ needs.branch_meta.outputs.branch }}
 
-  # test if this really works
   wait_for_helm_chart_to_get_published:
     needs:
       - release_helm
@@ -80,7 +79,8 @@ jobs:
       - branch_meta
       - create_branch_identifier
       - wait_for_helm_chart_to_get_published
-    uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@DBP-799-openldap-image-helm-chart # Branch name needs to get used here
+    # uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@5 
+    uses: dBildungsplattform/spsh-app-deploy/.github/workflows/deploy.yml@DBP-799-openldap-image-helm-chart 
     with:
       dbildungs_iam_server_branch: ${{ needs.branch_meta.outputs.ticket }}
       schulportal_client_branch: ${{ needs.branch_meta.outputs.ticket }}
