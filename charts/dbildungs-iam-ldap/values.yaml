@@ -42,9 +42,9 @@ service:
   enableSslLdapPort: true
 
   sessionAffinity: None
-  type: ClusterIP 
-  # type: LoadBalancer
-  externalIp: false
+  # type: ClusterIP
+  type: LoadBalancer
+  externalIp: true
   # if enabled you need to have to set the LOADBALANCER_IP key with value in the existingSecret
   # externalIp: true
   SourceRangesRestriction: false
@@ -259,7 +259,7 @@ initSchema:
 ##  need a secret with tls.crt, tls.key 
 initTLSSecret:
   # adminldap, per default disabled only works with tls_enabled
-  tls_enabled: false 
+  tls_enabled: true
   # tls_enabled: true # needs to get enabled if you want to make the service available to the outside 
   # Note that only one namespace at a time can use this feature and that you need to copy a tls secret into the namespace, see Confluence for more information
   image:
