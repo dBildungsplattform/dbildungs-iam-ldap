@@ -1,5 +1,6 @@
 
 # OpenLDAP Helm Chart
+DUMMY LINE FOR TAG TESTING REASONS
 ## Disclaimer
 This version now use the [Bitnami Openldap](https://hub.docker.com/r/bitnami/openldap) container image.
 
