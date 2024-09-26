@@ -65,6 +65,7 @@ spec:
               fi
               cp /tmp-init-scripts/01.sh /script/01.sh &&
               cp /tmp-init-scripts/02.sh /script/02.sh &&
+              cp /tmp-init-scripts/schemas.ldif /script/schemas.ldif
               chmod +x /script/01.sh
               chmod +x /script/02.sh
             {{- if .Values.global.existingSecret }}
