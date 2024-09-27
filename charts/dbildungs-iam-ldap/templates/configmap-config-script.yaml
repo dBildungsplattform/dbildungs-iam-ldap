@@ -22,7 +22,7 @@ data:
     # no sure why this sleep is needed again - but it is
     sleep 10
     # /bin/bash /script/02.sh
-    ldapapply -Y EXTERNAL -H ldapi:/// -f /script/schemas.ldif
+    # ldapapply -Y EXTERNAL -H ldapi:/// -f /script/ucsmail.ldif
 
 
   # this script is needed so that Helm Chart is stable if persistence is enabled
@@ -74,7 +74,7 @@ data:
     fi
 
 
-  schemas.ldif: |
+  ucsmail.ldif: |
     # add custom schema 
     dn: cn=ucsMail,cn=schema,cn=config
     objectClass: olcSchemaConfig

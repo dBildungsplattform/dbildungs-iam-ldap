@@ -65,7 +65,7 @@ spec:
               fi
               cp /tmp-init-scripts/01.sh /script/01.sh &&
               cp /tmp-init-scripts/02.sh /script/02.sh &&
-              cp /tmp-init-scripts/schemas.ldif /script/schemas.ldif
+              # cp /tmp-init-scripts/ucsmail.ldif /opt/bitnami/openldap/etc/schema/ucsmail.ldif
               chmod +x /script/01.sh
               chmod +x /script/02.sh
             {{- if .Values.global.existingSecret }}
