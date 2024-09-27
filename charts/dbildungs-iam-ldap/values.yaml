@@ -137,7 +137,7 @@ replication:
   tls_reqcert: "never"
 
 persistence:
-  enabled: false
+  enabled: true
   # existingClaim: openldap-pvc
   accessModes:
     - ReadWriteOnce
