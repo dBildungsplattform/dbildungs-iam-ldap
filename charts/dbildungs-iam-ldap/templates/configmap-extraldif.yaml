@@ -52,9 +52,14 @@ data:
   modify.ldif: |-
     # Group members
     dn: cn=lehrer,dc=schule-sh,dc=de
-    add: uniquemember
+    cn: lehrer
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    dn: cn=lehrer,dc=schule-sh,dc=de
     uniquemember: cn=ssuperadmin,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
 
     dn: cn=schueler,dc=schule-sh,dc=de
-    add: uniquemember
+    cn: schueler
+    objectclass: groupOfUniqueNames
+    objectclass: top
     uniquemember: cn=mmusterschueler,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
