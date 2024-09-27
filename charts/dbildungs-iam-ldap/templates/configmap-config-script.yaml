@@ -23,17 +23,18 @@ data:
     sleep 10
 
     # Loading Schemas
-    if ! (ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=schema,cn=config" "(cn=*ucsMail)"); then
-      ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/bitnami/openldap/etc/schema/ucsmail.ldif
+    ucsmail_search_output=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=schema,cn=config" "(cn=*ucsMail)")
+    if (echo "$ucsmail_search_output" | grep -q "numEntries: 1"); then
+      echo "Entry for ucsMail Schema already exists. If you need to modify it, delete it and readd it."
     else
-      echo "Entry for ucsMail Schema already exists. Nothing to add."
+      ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/bitnami/openldap/etc/schema/ucsmail.ldif
     fi
 
-    # Adding Config Users
+    # Adding Config Users from Secret
     /bin/bash /script/02.sh /ldap-configuration/apply/apply.ldif true
-    # Adding other Configs
-    # /bin/bash /script/02.sh /ldap-configuration/extra/apply.ldif false
-    # /bin/bash /script/02.sh /ldap-configuration/extra/modify.ldif true
+    # Adding other Configs from Configmap
+    /bin/bash /script/02.sh /ldap-configuration/extra/apply.ldif false
+    /bin/bash /script/02.sh /ldap-configuration/extra/modify.ldif true
 
     
 

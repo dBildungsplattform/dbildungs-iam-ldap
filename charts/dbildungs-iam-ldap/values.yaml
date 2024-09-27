@@ -140,6 +140,7 @@ replication:
 
 persistence:
   enabled: true
+  # enabled: false
   # existingClaim: openldap-pvc
   accessModes:
     - ReadWriteOnce

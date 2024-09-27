@@ -16,11 +16,13 @@ data:
     cn: lehrer
     objectclass: groupOfUniqueNames
     objectclass: top
+    uniquemember:
 
     dn: cn=schueler,dc=schule-sh,dc=de
     cn: schueler
     objectclass: groupOfUniqueNames
     objectclass: top
+    uniquemember:
 
     dn: ou=oeffentlicheSchulen,dc=schule-sh,dc=de
     objectclass: organizationalUnit
@@ -55,7 +57,6 @@ data:
     cn: lehrer
     objectclass: groupOfUniqueNames
     objectclass: top
-    dn: cn=lehrer,dc=schule-sh,dc=de
     uniquemember: cn=ssuperadmin,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
 
     dn: cn=schueler,dc=schule-sh,dc=de
