@@ -147,6 +147,11 @@ customExtraLdifFiles:
     objectclass: top
     ou: oeffentlicheSchulen
 
+    dn: ou=ersatzSchulen,dc=schule-sh,dc=de
+    objectclass: organizationalUnit
+    objectclass: top
+    ou: ersatzSchulen
+
     dn: cn=mmusterschueler,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
     uid: mmusterschueler
     cn: mmusterschueler
