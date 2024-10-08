@@ -27,7 +27,7 @@ data:
     if (echo "$ucsmail_search_output" | grep -q "numEntries: 1"); then
       echo "Entry for ucsMail Schema already exists. If you need to modify it, delete it and readd it."
     else
-      ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/bitnami/openldap/etc/schema/ucsmail.ldif
+      ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/bitnami/openldap/etc/schema/00-ucsmail.ldif
     fi
 
     # Adding Config Users from Secret

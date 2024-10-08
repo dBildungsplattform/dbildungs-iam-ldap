@@ -96,7 +96,7 @@ pdb:
 # Note that the supplied files are sorted by name and inserted into 'LDAP_EXTRA_SCHEMAS' env var
 # after chart default schemas, allowing you to control the loading sequence.
 customSchemaFiles:
-  ucsmail.ldif: |-
+  00-ucsmail.ldif: |-
     dn: cn=ucsMail,cn=schema,cn=config
     objectClass: olcSchemaConfig
     cn: ucsMail
@@ -125,6 +125,63 @@ customLdifFiles:
     objectClass: dcObject
     objectClass: organization
     o: SPSH
+
+
+# First the apply.ldif gets applied if entry is not existend, then the entries in modify.ldif overwrite the entries
+customExtraLdifFiles: 
+  apply.ldif: |-
+    dn: cn=lehrer,dc=schule-sh,dc=de
+    cn: lehrer
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    uniquemember:
+
+    dn: cn=schueler,dc=schule-sh,dc=de
+    cn: schueler
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    uniquemember:
+
+    dn: ou=oeffentlicheSchulen,dc=schule-sh,dc=de
+    objectclass: organizationalUnit
+    objectclass: top
+    ou: oeffentlicheSchulen
+
+    dn: cn=mmusterschueler,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
+    uid: mmusterschueler
+    cn: mmusterschueler
+    givenname: Moritz
+    objectclass: inetOrgPerson
+    objectclass: univentionMail
+    mailPrimaryAddress: moritz.muster-schueler@schule-sh.de
+    mailAlternativeAddress: moritz.muster-schueler@schule-sh.de
+    objectclass: top
+    sn: Muster-Schueler
+
+    dn: cn=ssuperadmin,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
+    uid: ssuperadmin
+    cn: ssuperadmin
+    givenname: Susi
+    objectclass: inetOrgPerson
+    objectclass: univentionMail
+    mailPrimaryAddress: susi.superadmin@schule-sh.de
+    mailAlternativeAddress: susi.superadmin@schule-sh.de
+    objectclass: top
+    sn: Superadmin
+
+  modify.ldif: |-
+    # Group members
+    dn: cn=lehrer,dc=schule-sh,dc=de
+    cn: lehrer
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    uniquemember: cn=ssuperadmin,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
+
+    dn: cn=schueler,dc=schule-sh,dc=de
+    cn: schueler
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    uniquemember: cn=mmusterschueler,ou=oeffentlicheSchulen,dc=schule-sh,dc=de
 
 replicaCount: 1
 
