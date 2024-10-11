@@ -7,7 +7,7 @@ global:
   existingSecret: ""
   # If you do not set the credentials via this secret but via the ENV the Helm Chart will fail (permission issue)
   adminUser: "admin"                          # LDAP_ADMIN_USERNAME
-  # adminPassword: ""                         # LDAP_CONFIG_ADMIN_PASSWORD
+  adminPassword: "admin"                         # LDAP_CONFIG_ADMIN_PASSWORD
   configUserEnabled: true                     # LDAP_CONFIG_ADMIN_ENABLED (default: no)
   configUser: "config"                        # LDAP_CONFIG_ADMIN_USERNAME
   # configPassword: ""                        # LDAP_CONFIG_ADMIN_USERNAME
