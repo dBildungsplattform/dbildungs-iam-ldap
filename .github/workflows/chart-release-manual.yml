@@ -1,6 +1,6 @@
 name: Push Charts to helm-charts-registry manually with specified version
 
-on:
+on: 
   workflow_dispatch:
     inputs:
       chart_version:
