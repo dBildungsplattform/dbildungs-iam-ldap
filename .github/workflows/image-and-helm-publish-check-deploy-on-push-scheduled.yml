@@ -16,7 +16,6 @@ concurrency:
 jobs:
   scan_helm:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}
-    id: scan_helm
     uses: dBildungsplattform/dbp-github-workflows/.github/workflows/check-helm-kics.yaml@5
     permissions:
       contents: read
@@ -73,7 +72,6 @@ jobs:
 
   deploy:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}
-    id: deploy
     needs:
       - branch_meta
       - create_branch_identifier
@@ -88,7 +86,7 @@ jobs:
     secrets: inherit
 
   all_tests_successfull:
-    if: steps.deploy.outcome == 'success' &&  steps.scan_helm.outcome == 'success' 
+    if: success() 
     needs:
       - scan_helm
       - deploy
