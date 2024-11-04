@@ -86,7 +86,6 @@ jobs:
     secrets: inherit
 
   all_tests_successfull:
-    if: success() 
     needs:
       - scan_helm
       - deploy
