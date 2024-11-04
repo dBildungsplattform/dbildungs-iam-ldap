@@ -10,7 +10,7 @@ metadata:
     heritage: {{ .Release.Service }}
 
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ if not .Values.autoscaling.enabled }}{{ .Values.replicaCount }}{{ end }}
   selector:
     matchLabels:
       app: {{ template "phpldapadmin.name" . }}
