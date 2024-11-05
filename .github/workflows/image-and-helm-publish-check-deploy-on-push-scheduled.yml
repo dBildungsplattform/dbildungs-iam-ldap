@@ -58,15 +58,6 @@ jobs:
         run: |
           sleep 1m 
 
-  wait_for_helm_chart_to_get_published:
-    needs:
-      - release_helm
-    runs-on: ubuntu-latest
-    steps:
-      - shell: bash
-        run: |
-          sleep 1m 
-
   branch_meta:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}
     uses: dBildungsplattform/spsh-app-deploy/.github/workflows/get-branch-meta.yml@3
