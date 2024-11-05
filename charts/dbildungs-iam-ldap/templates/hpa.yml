@@ -1,10 +1,10 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "common.names.name" . }}
+  name: {{ template "openldap.fullname" . }}-hpa #naming correct? 
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ include "common.names.name" . }}
+    app.kubernetes.io/name: {{ template "openldap.fullname" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "common.names.name" . }}   
+    name: {{ template "openldap.fullname" . }}-metrics   
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
