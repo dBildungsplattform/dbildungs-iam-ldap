@@ -22,9 +22,7 @@ jobs:
 
   select_helm_version_generation_and_image_tag_generation:
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name,'dependabot/') }}
-    needs: 
-      - scan_helm
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     outputs: 
       SELECT_HELM_VERION_GENERATION: ${{ steps.select_generation.outputs.SELECT_HELM_VERION_GENERATION }}
       SELECT_IMAGE_TAG_GENERATION: ${{ steps.select_generation.outputs.SELECT_IMAGE_TAG_GENERATION }}
@@ -50,6 +48,15 @@ jobs:
       chart_name: dbildungs-iam-ldap
       helm_chart_version_generation: ${{ needs. select_helm_version_generation_and_image_tag_generation.outputs.SELECT_HELM_VERION_GENERATION  }}
       image_tag_generation: ${{ needs. select_helm_version_generation_and_image_tag_generation.outputs.SELECT_IMAGE_TAG_GENERATION  }}
+
+  wait_for_helm_chart_to_get_published:
+    needs:
+      - release_helm
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          sleep 1m 
 
   wait_for_helm_chart_to_get_published:
     needs:
