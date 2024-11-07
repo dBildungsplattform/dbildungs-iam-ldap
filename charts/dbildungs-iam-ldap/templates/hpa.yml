@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "openldap.fullname" . }}-hpa #naming correct? 
+  name: {{ template "openldap.fullname" . }} 
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ template "openldap.fullname" . }}
