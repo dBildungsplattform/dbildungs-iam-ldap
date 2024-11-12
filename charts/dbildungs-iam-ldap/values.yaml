@@ -55,12 +55,12 @@ extraLabels: {}
 
 # enable this service block and disable the service one above, to make LDAP outside the cluster available 	
 # Note that only one namespace at a time can use this feature!!	
- service:	
-   enableLdapPort: true
-   enableSslLdapPort: true	
-   type: LoadBalancer	
-   externalIp: true	
-   SourceRangesRestriction: false
+service:	
+  enableLdapPort: true
+  enableSslLdapPort: true	
+  type: LoadBalancer	
+  externalIp: true	
+  SourceRangesRestriction: false
 
 
 # Use the env variables from https://hub.docker.com/r/bitnami/openldap/
