@@ -403,8 +403,8 @@ customStartupProbe: {}
 ## For more parameters check following file: ./charts/phpldapadmin/values.yaml
 # if you want to use phpldapadmin for debugging set:
 initTLSSecret:
-  tls_enabled: false 
- env: 
+   tls_enabled: false 
+env: 
    LDAP_ENABLE_TLS: "no" 
 phpldapadmin:
   enabled: true
