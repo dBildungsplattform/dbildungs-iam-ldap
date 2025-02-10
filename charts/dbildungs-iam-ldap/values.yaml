@@ -401,8 +401,8 @@ customStartupProbe: {}
 
 ## phpldapadmin
 ## For more parameters check following file: ./charts/phpldapadmin/values.yaml
-# if you want to use phpldapadmin for debugging set:  
-env: 
+# if you want to use phpldapadmin for debugging set:
+env:
   LDAP_ENABLE_TLS: "no"
 phpldapadmin:
   enabled: true
@@ -412,13 +412,13 @@ phpldapadmin:
     PHPLDAPADMIN_LDAP_CLIENT_TLS_REQCERT: "never"
   ingress:
     enabled: true
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: "nginx"
     hosts:
-      - spsh-1529-phpldapadmin.dev.spsh.dbildungsplattform.de
+      - spsh-1771-phpldapadmin.dev.spsh.dbildungsplattform.de
     path: /
     pathType: Prefix
     tls:
       - secretName: phpldapadmin-tls
         hosts:
-          - spsh-1529-phpldapadmin.dev.spsh.dbildungsplattform.de
+          - spsh-1771-phpldapadmin.dev.spsh.dbildungsplattform.de
