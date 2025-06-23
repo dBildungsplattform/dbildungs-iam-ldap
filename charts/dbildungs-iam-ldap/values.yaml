@@ -319,7 +319,7 @@ metrics:
 initSchema:
   image: 
     repository: debian
-    tag: lates
+    tag: latest
     pullPolicy: Always
     pullSecrets: []
 
