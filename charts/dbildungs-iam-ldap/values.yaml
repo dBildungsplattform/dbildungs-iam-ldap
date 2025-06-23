@@ -305,7 +305,7 @@ metrics:
     annotations: {}
     labels: {}
     ports:
-      - name: metrics
+   t   - name: metrics
         port: 9330
 
   ## Prometheus Operator ServiceMonitor configuration
@@ -319,7 +319,7 @@ metrics:
 initSchema:
   image: 
     repository: debian
-    tag: latest
+    tag: lates
     pullPolicy: Always
     pullSecrets: []
 
@@ -354,9 +354,8 @@ initTLSSecret:
 volumePermissions:
   enabled: true
   image:
-    registry: docker.io
-    repository: bitnami/bitnami-shell
-    tag: 10-debian-10
+    repository: debian
+    tag: latest
     pullPolicy: IfNotPresent
     command: [ 'sh', '-c', 'chmod -R g+rwX /bitnami' ]
   resources:
