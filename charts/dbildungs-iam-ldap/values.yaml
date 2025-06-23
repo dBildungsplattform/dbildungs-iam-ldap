@@ -320,7 +320,7 @@ initSchema:
   image: 
     repository: debian
     tag: latest
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     pullSecrets: []
 
 ## initContainers:
