@@ -305,7 +305,7 @@ metrics:
     annotations: {}
     labels: {}
     ports:
-   t   - name: metrics
+      - name: metrics
         port: 9330
 
   ## Prometheus Operator ServiceMonitor configuration
