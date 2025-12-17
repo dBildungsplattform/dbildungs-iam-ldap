@@ -1,3 +1,4 @@
+bump
 
 # OpenLDAP Helm Chart
 ## Disclaimer
